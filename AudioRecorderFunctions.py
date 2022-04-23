@@ -93,6 +93,7 @@ def TriggeredRecordAudio(ui):
  from pydub import AudioSegment
  import array
  import pdb
+ import audioop
 
 
  
@@ -271,7 +272,10 @@ def TriggeredRecordAudio(ui):
       data = b''.join(list(plot_win1))
       plotarray1 = array.array("h",data);
       
-      if(sum([x > (GlobalVars.threshold1) for x in plotarray1])>100 and len(audio2send1)<MAX_DUR*rel):  
+      data = b''.join(list(perm_win1))
+      currmax=audioop.max(data,2)
+      
+      if (currmax > GlobalVars.threshold1) and (len(audio2send1)<MAX_DUR*rel):
        if(not started1):
           ui.ListeningTextBox_1.setText('<span style="color:red">singing</span>')
           started1 = True
@@ -325,7 +329,10 @@ def TriggeredRecordAudio(ui):
       data = b''.join(list(plot_win2))
       plotarray2 = array.array("h",data);  
       
-      if (sum([x > GlobalVars.threshold2 for x in plotarray2])>100 and len(audio2send2)<MAX_DUR*rel):
+      data = b''.join(list(perm_win2))
+      currmax=audioop.max(data,2)      
+     
+      if (currmax >  GlobalVars.threshold2) and (len(audio2send2)<MAX_DUR*rel):          
        if(not started2):
           ui.ListeningTextBox_2.setText('<span style="color:red">singing</span>')
           started2 = True
@@ -378,8 +385,13 @@ def TriggeredRecordAudio(ui):
       perm_win3.append(ch3)
       data = b''.join(list(plot_win3))
       plotarray3 = array.array("h",data);                
+      currmax=audioop.max(data,2)
       
-      if (sum([x > GlobalVars.threshold3 for x in plotarray3])>100 and len(audio2send3)<MAX_DUR*rel):
+      data = b''.join(list(perm_win3))
+      currmax=audioop.max(data,2)
+
+      
+      if (currmax > GlobalVars.threshold3) and (len(audio2send3)<MAX_DUR*rel):  
        if(not started3):
           ui.ListeningTextBox_3.setText('<span style="color:red">singing</span>')
           started3 = True
@@ -433,9 +445,11 @@ def TriggeredRecordAudio(ui):
       perm_win4.append(ch4)
       plot_win4.append(ch4)       
       data = b''.join(list(plot_win4))
-      plotarray4 = array.array("h",data);      
+      plotarray4 = array.array("h",data);          
+      data = b''.join(list(perm_win4))
+      currmax=audioop.max(data,2)
       
-      if (sum([x > GlobalVars.threshold4 for x in plotarray4])>100 and len(audio2send4)<MAX_DUR*rel):
+      if (currmax > GlobalVars.threshold4) and (len(audio2send4)<MAX_DUR*rel):     
        if(not started4):
           ui.ListeningTextBox_4.setText('<span style="color:red">singing</span>')
           started4 = True
