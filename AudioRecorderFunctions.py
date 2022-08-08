@@ -326,11 +326,13 @@ def TriggeredRecordAudio(ui):
 
       ch2=channels[1].raw_data;    
       plot_win2.append(ch2)
+      perm_win2.append(ch2)      
       data = b''.join(list(plot_win2))
       plotarray2 = array.array("h",data);  
       
       data = b''.join(list(perm_win2))
-      currmax=audioop.max(data,2)      
+      currmax=audioop.max(data,2)
+            
      
       if (currmax >  GlobalVars.threshold2) and (len(audio2send2)<MAX_DUR*rel):          
        if(not started2):
